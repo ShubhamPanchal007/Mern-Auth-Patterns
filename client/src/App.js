@@ -8,10 +8,10 @@ function App() {
 
   async function registerhandler(e) {
     e.preventDefault();
-    const respose = await fetch("http://localhost:1337/api/register", {
+    const res = await fetch("http://localhost:1337/api/register", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name,
@@ -19,8 +19,9 @@ function App() {
         password,
       }),
     });
-    const jsonResp = respose.json();
-    console.log(jsonResp)
+    const jsonResp = res.json();
+    //fetch will return a promise would get stored in jsonResp
+    console.log(jsonResp);
   }
   return (
     <div className="flex justify-center">
