@@ -1,5 +1,8 @@
 import express from "express";
 import cors from "cors";
+import "./DB/DBConnection.js";
+import routes from "./AppRoutes/routes.js";
+
 const app = express();
 const PORT = 1337;
 
@@ -7,12 +10,9 @@ const PORT = 1337;
 app.use(cors());
 // A preflight request is basically an OPTION request sent to the server before the actual request is sent, in order to ask which origin and which request options the server accepts.
 
+// Tell server
 app.use(express.json());
-
-app.post("/api/register", (req, res) => {
-  console.log(req.body);
-  res.send({ status: "ok" });
-});
+app.use("/api", routes);
 app.get("/", (_, res) => {
   res.send("you are on HomePage");
 });
