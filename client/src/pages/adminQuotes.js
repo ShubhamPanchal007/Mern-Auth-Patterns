@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 
-const ProtectedRoute = () => {
+const Adminquote = () => {
   const [quote, setQuote] = useState("");
 
   async function populateQuote() {
-    const req = await fetch("http://localhost:1337/api/quote", {
+    const req = await fetch("http://localhost:1337/api/Adminquote", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -31,13 +31,14 @@ const ProtectedRoute = () => {
     }
   }, []);
 
-  
   return (
     <div>
-      <h1>Your quote: {quote || "No quote found"}</h1>
-      
+      <h1>
+        Your quote:{" "}
+        {quote || "You are not authorized to  see the admin level quotes"}
+      </h1>
     </div>
   );
 };
 
-export default ProtectedRoute;
+export default Adminquote;

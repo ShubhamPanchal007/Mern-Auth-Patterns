@@ -14,6 +14,6 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", routes);
 app.get("/", (_, res) => {
-  res.send("you are on HomePage");
+  res.send("Exppress is someple");
 });
 app.listen(PORT, () => console.log("Running on port " + PORT));
