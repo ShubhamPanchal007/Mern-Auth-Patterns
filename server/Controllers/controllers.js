@@ -1,6 +1,6 @@
 import { User } from "../models/userModels.js";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 dotenv.config({ path: "../config.env" });
 // Register User
 export const registerUser = async (req, res) => {
@@ -28,24 +28,47 @@ export const logUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email, password });
   if (user) {
-    const token  = jwt.sign({
-      email,
-    },process.env.SECRET)
-    return res.json({ status: "ok" ,user:token});
+    const roles = user.roles;
+    console.log(user);
+    if (user.password == password) {
+      const token = jwt.sign(
+        {
+          email,
+          roles,
+        },
+        process.env.SECRET
+      );
+      return res.json({ status: "ok", user: token });
+    }
   } else {
     return res.json({ status: "User Doesn't exist!" });
   }
 };
 export const getQuotes = async (req, res) => {
-	const token = req.headers['x-access-token']
-	try {
-		const decoded = jwt.verify(token, process.env.SECRET)
-		const email = decoded.email
-		const user = await User.findOne({ email: email })
-    user.quote = "To finish a project early, you should start it eary!"
-		return res.json({ status: 'ok', quote: user.quote })
-	} catch (error) {
-		console.log(error)
-		res.json({ status: 'error', error: 'invalid token' })
-	}
-}
+  const token = req.headers["x-access-token"];
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
+    const email = decoded.email;
+    const user = await User.findOne({ email: email });
+    user.quote = "To finish a project early, you should start it early!";
+    return res.json({ status: "ok", quote: user.quote });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", error: "Bad token" });
+  }
+};
+
+export const getAdminLevelQuotes = async (req, res) => {
+  const token = req.headers["x-access-token"];
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
+    const email = decoded.email;
+    const user = await User.findOne({ email: email });
+    user.quote =
+      "Even if you're the best of the best their's always a faillure";
+    return res.json({ status: "ok", quote: user.quote });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", error: "Bad Token" });
+  }
+};

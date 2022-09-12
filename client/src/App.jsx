@@ -3,7 +3,9 @@ import React from "react";
 import Login from "./forms/Login.js";
 import Register from "./forms/Register.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ProtectedRoute from "./pages/protectedRoute";
+import Quotes from "./pages/quotes.js";
+import AdminQuotes from "./pages/adminQuotes.js";
+
 function App() {
   return (
     <div>
@@ -11,7 +13,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/anyProtectedRoute" element={<ProtectedRoute />} />
+          <Route path="/protectedQuotes" element={<Quotes />} />
+          <Route path="/protectedAdminQuotes" element={<AdminQuotes />} />
         </Routes>
       </BrowserRouter>
     </div>
