@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
+import Logout from "../Logout";
 
 const ProtectedRoute = () => {
   const [quote, setQuote] = useState("");
@@ -31,11 +32,10 @@ const ProtectedRoute = () => {
     }
   }, []);
 
-  
   return (
     <div>
       <h1>Your quote: {quote || "No quote found"}</h1>
-      
+      <Logout />
     </div>
   );
 };
