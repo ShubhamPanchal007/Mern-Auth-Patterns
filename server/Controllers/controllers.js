@@ -1,11 +1,11 @@
 import { User } from "../models/userModels.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { verifyJwt } from "../utils.js";
 dotenv.config({ path: "../config.env" });
 // Register User
 export const registerUser = async (req, res) => {
   try {
-    console.log(req.body);
     const { name, email, password } = req.body;
     const foundUser = User.findOne({ email });
     if (foundUser) {
@@ -29,7 +29,6 @@ export const logUser = async (req, res) => {
   const user = await User.findOne({ email, password });
   if (user) {
     const roles = user.roles;
-    console.log(user);
     if (user.password == password) {
       const token = jwt.sign(
         {
@@ -45,23 +44,21 @@ export const logUser = async (req, res) => {
   }
 };
 export const getQuotes = async (req, res) => {
-  const token = req.headers["x-access-token"];
   try {
-    const decoded = jwt.verify(token, process.env.SECRET);
+    const decoded = verifyJwt(req);
     const email = decoded.email;
     const user = await User.findOne({ email: email });
     user.quote = "To finish a project early, you should start it early!";
     return res.json({ status: "ok", quote: user.quote });
   } catch (error) {
     console.log(error);
-    res.json({ status: "error", error: "Bad token" });
+    res.json({ status: "error", error: "Bad token getting quotes" });
   }
 };
 
 export const getAdminLevelQuotes = async (req, res) => {
-  const token = req.headers["x-access-token"];
   try {
-    const decoded = jwt.verify(token, process.env.SECRET);
+    const decoded = verifyJwt(req);
     const email = decoded.email;
     const user = await User.findOne({ email: email });
     user.quote =
@@ -69,6 +66,6 @@ export const getAdminLevelQuotes = async (req, res) => {
     return res.json({ status: "ok", quote: user.quote });
   } catch (error) {
     console.log(error);
-    res.json({ status: "error", error: "Bad Token" });
+    res.json({ status: "error", error: "Bad Token getting admin quotes" });
   }
 };

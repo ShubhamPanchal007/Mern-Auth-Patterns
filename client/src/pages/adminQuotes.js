@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
-
+import Logout from "../Logout";
 const Adminquote = () => {
   const [quote, setQuote] = useState("");
 
@@ -37,6 +37,7 @@ const Adminquote = () => {
         Your quote:{" "}
         {quote || "You are not authorized to  see the admin level quotes"}
       </h1>
+      <Logout/>
     </div>
   );
 };

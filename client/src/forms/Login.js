@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +17,7 @@ function Login() {
     if (res.user) {
       localStorage.setItem("token", res.user);
       alert("login successfull");
-      window.location.href = '/anyProtectedRoute'
+      window.location.href = '/protectedQuotes'
     }else{
       alert("Please check your credentials!!")
     }
